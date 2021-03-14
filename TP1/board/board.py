@@ -1,5 +1,6 @@
 import copy
 from collections import deque
+from collections import defaultdict 
 
 
 class Position:
@@ -22,7 +23,7 @@ class Position:
     def __lt__(self, other):
         return (self.x < other.x) and (self.y < other.y)
 
-    def __hash__(self):
+    def hash(self):
         return hash(hash(self.x)+hash(self.y))
 
 
@@ -55,7 +56,7 @@ class Node:
             print(b)
         return str_node
 
-    def __hash__(self):
+    def hash(self):
         return hash(self.player_position) + hash(str(self.boxes_positions.sort()))
 
 
@@ -125,9 +126,9 @@ class Graph:
                 self.add_node(aux_node, move)
         return False
 
-    def depth_first_search(self, _root):
-        self.nodes_to_visit_queue.append(_root)
-        self.current_node = _root
+    def breadth_first_search(self, root):
+        self.nodes_to_visit_queue.append(root)
+        self.current_node = root
         while len(self.nodes_to_visit_queue) != 0:
             print(self.current_node.steps)
             self.visited_nodes.add(self.current_node)
@@ -138,7 +139,48 @@ class Graph:
             if not len(self.nodes_to_visit_queue) == 0:
                 self.current_node = self.nodes_to_visit_queue[0]
 
+    def addNeighbours(self, node, neighbours):
+        for move in DIRECTION:
+            aux_node = copy.deepcopy(node)
+            aux_node.player_position.move_position(DIRECTION[move])
+            if self.check_if_wall(aux_node.player_position):
+                continue
+            if self.check_if_box(aux_node.player_position):
+                for box in aux_node.boxes_positions:
+                    if box == aux_node.player_position:
+                        box.move_position(DIRECTION[move])
+                    else:
+                        continue
+                    if not self.check_if_wall(box):
+                        if not self.check_if_box(box):
+                            if self.check_win(aux_node):
+                                aux_node.steps.append(move)
+                                print(aux_node.steps)
+                                return True
+                            self.add_node(aux_node, move)
+                            neighbours.add(aux_node)
+                    else:
+                        continue
+                continue
+            else:
+                self.add_node(aux_node, move)
+                neighbours.add(aux_node)
+        return False
+
+    def IDDFS(self, node, depth, maxDepth): 
+        if depth == maxDepth: return
+
+        if self.visited_nodes.__contains__(node): return
+        self.visited_nodes.add(node)
+
+        neighbours = deque()
+        if addNeighbours(self, node, neighbours): return
+
+        for next in iter(neighbours.get, None):
+            IDDFS(self, next, depth+=1, maxDepth)
+
 
 root = Node(Position(2, 2), [Position(1, 2)], [])
 g = Graph()
-g.depth_first_search(root)
+g.breadth_first_search(root)
+g.IDDFS(root, 0, maxDepth)
