@@ -23,7 +23,7 @@ class Position:
     def __lt__(self, other):
         return (self.x < other.x) and (self.y < other.y)
 
-    def hash(self):
+    def __hash__(self):
         return hash(hash(self.x)+hash(self.y))
 
 
@@ -56,7 +56,7 @@ class Node:
             print(b)
         return str_node
 
-    def hash(self):
+    def __hash__(self):
         return hash(self.player_position) + hash(str(self.boxes_positions.sort()))
 
 
@@ -167,20 +167,24 @@ class Graph:
                 neighbours.add(aux_node)
         return False
 
-    def IDDFS(self, node, depth, maxDepth): 
+    def iddfs(self, node, depth, maxDepth):
         if depth == maxDepth: return
-
+        print("error1")
         if self.visited_nodes.__contains__(node): return
         self.visited_nodes.add(node)
-
+        print("error2")
         neighbours = deque()
-        if addNeighbours(self, node, neighbours): return
-
+        if self.addNeighbours(node, neighbours): return
+        print("error3")
         for next in iter(neighbours.get, None):
-            IDDFS(self, next, depth+=1, maxDepth)
+            depth += 1
+            print("error4")
+            iddfs(self, next, depth, maxDepth)
 
 
 root = Node(Position(2, 2), [Position(1, 2)], [])
 g = Graph()
-g.breadth_first_search(root)
-g.IDDFS(root, 0, maxDepth)
+# g.breadth_first_search(root)
+initialDepth = 0
+maxDepth = 3
+g.iddfs(root, initialDepth, maxDepth)
