@@ -6,10 +6,12 @@ from boards.board2 import board2
 from boards.board3 import board3
 from boards.board4 import board4
 from boards.board5 import board5
-
-from node.node     import Node
-from node.position import Position
-from node.graph    import Graph
+from algorithms.bfs import bfs
+from algorithms.dfs import dfs
+from algorithms.iddfs import iddfs
+from structure.node     import Node
+from structure.position import Position
+from structure.graph    import Graph
 
 
 #boards = [board0, board1, ..., board5]
@@ -23,7 +25,7 @@ root = Node(player_position, boxes_positions, [])
 g = Graph(walls_positions, goals_positions)
 
 maxDepth = 35
-g.iddfs(root, maxDepth)
 
-#g.dfs(root)
-#g.bfs(root)
+# iddfs(g, root, maxDepth)
+# dfs(g, root)
+# bfs(g, root)
