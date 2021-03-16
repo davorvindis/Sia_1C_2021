@@ -113,7 +113,7 @@ class Graph:
                 for box in aux_node.boxes_positions:
                     if box == aux_node.player_position:
                         box.move_position(DIRECTION[move])
-                    if not self.check_if_wall(box):
+                    if not self.check_if_wall(box) and not self.check_if_box(box):
                         if self.check_win(aux_node):
                             aux_node.steps.append(move)
                             print(aux_node.steps)
@@ -178,9 +178,32 @@ class Graph:
 
         for next in iter(neighbours.get, None):
             IDDFS(self, next, depth+=1, maxDepth)
+            
+    def DFS(self, _root):
+        self.nodes_to_visit_queue.append(_root)
+        self.current_node = _root
+        
+        while len(self.nodes_to_visit_queue) != 0:
+            
+            print('> ', self.current_node.steps)
+            self.current_node = self.nodes_to_visit_queue.pop()
+            
+            #if node has not been visited
+            if self.current_node not in self.visited_nodes:
+                
+                #Add it to the list of not visited
+                self.visited_nodes.add(self.current_node)
+                
+                #Add neighbors of current_node to self.nodes_to_visit_queue
+                if self.check_moves(self.current_node):
+                    print("win")
+                    return
 
 
 root = Node(Position(2, 2), [Position(1, 2)], [])
 g = Graph()
 g.breadth_first_search(root)
 g.IDDFS(root, 0, maxDepth)
+
+#g = Graph()
+#g.DFS(root)
