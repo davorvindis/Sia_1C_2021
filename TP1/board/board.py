@@ -42,6 +42,7 @@ class Node:
         self.player_position = player_position
         self.boxes_positions = boxes_positions
         self.steps = steps
+        self.depth = 0
 
     def add_step(self, move):
         self.steps.append(move)
@@ -58,7 +59,7 @@ class Node:
 
     def __hash__(self):
         return hash(self.player_position) + hash(str(self.boxes_positions.sort()))
-
+        
 
 class Graph:
     """ Has the static content of the game: {walls, goals} && Graph structure and game analytics"""
@@ -82,6 +83,12 @@ class Graph:
         return False
 
     def add_node(self, aux_node, move):
+        aux_node.steps.append(move)
+        if aux_node not in self.visited_nodes:
+            self.nodes_to_visit_queue.append(aux_node)
+
+    def add_node_with_depth(self, aux_node, move, newDepth):
+        aux_node.depth = newDepth
         aux_node.steps.append(move)
         if aux_node not in self.visited_nodes:
             self.nodes_to_visit_queue.append(aux_node)
@@ -139,48 +146,6 @@ class Graph:
             if not len(self.nodes_to_visit_queue) == 0:
                 self.current_node = self.nodes_to_visit_queue[0]
 
-    def addNeighbours(self, node, neighbours):
-        for move in DIRECTION:
-            aux_node = copy.deepcopy(node)
-            aux_node.player_position.move_position(DIRECTION[move])
-            if self.check_if_wall(aux_node.player_position):
-                continue
-            if self.check_if_box(aux_node.player_position):
-                for box in aux_node.boxes_positions:
-                    if box == aux_node.player_position:
-                        box.move_position(DIRECTION[move])
-                    else:
-                        continue
-                    if not self.check_if_wall(box):
-                        if not self.check_if_box(box):
-                            if self.check_win(aux_node):
-                                aux_node.steps.append(move)
-                                print(aux_node.steps)
-                                return True
-                            self.add_node(aux_node, move)
-                            neighbours.add(aux_node)
-                    else:
-                        continue
-                continue
-            else:
-                self.add_node(aux_node, move)
-                neighbours.add(aux_node)
-        return False
-
-    def iddfs(self, node, depth, maxDepth):
-        if depth == maxDepth: return
-        print("error1")
-        if self.visited_nodes.__contains__(node): return
-        self.visited_nodes.add(node)
-        print("error2")
-        neighbours = deque()
-        if self.addNeighbours(node, neighbours): return
-        print("error3")
-        for next in iter(neighbours.get, None):
-            depth += 1
-            print("error4")
-            iddfs(self, next, depth, maxDepth)
-            
     def DFS(self, _root):
         self.nodes_to_visit_queue.append(_root)
         self.current_node = _root
@@ -193,7 +158,7 @@ class Graph:
             #if node has not been visited
             if self.current_node not in self.visited_nodes:
                 
-                #Add it to the list of not visited
+                #Add it to the list of visited
                 self.visited_nodes.add(self.current_node)
                 
                 #Add neighbors of current_node to self.nodes_to_visit_queue
@@ -202,12 +167,56 @@ class Graph:
                     return
 
 
+    def expand(self, _node):
+        newDepth = _node.depth + 1
+        for move in DIRECTION:
+            aux_node = copy.deepcopy(_node)
+            aux_node.player_position.move_position(DIRECTION[move])
+            if self.check_if_wall(aux_node.player_position):
+                continue
+            if self.check_if_box(aux_node.player_position):
+                for box in aux_node.boxes_positions:
+                    if box == aux_node.player_position:
+                        box.move_position(DIRECTION[move])
+                    if not self.check_if_wall(box) and not self.check_if_box(box):
+                        self.add_node_with_depth(aux_node, move, newDepth)
+                    else:
+                        continue
+                continue
+            else:
+                self.add_node_with_depth(aux_node, move, newDepth)
+        return False
+
+    def iddfs(self, _root, maxDepth):
+        self.nodes_to_visit_queue.append(_root)
+        self.current_node = _root
+        
+        while len(self.nodes_to_visit_queue) != 0:
+             
+            # print('> ', self.current_node.steps)
+            self.current_node = self.nodes_to_visit_queue.pop()
+            
+            # Verify if the node is a win
+            if self.check_win(self.current_node):
+                print("There you have the steps to win")
+                return
+
+            #if node has not been visited
+            if self.current_node not in self.visited_nodes:
+                
+                #Add it to the list of visited
+                self.visited_nodes.add(self.current_node)
+                
+                #Verify maxDepth & Expand
+                if self.current_node.depth != maxDepth:
+                    self.expand(self.current_node)
+        print("There was no solution with the given maxDepth")
+
 root = Node(Position(2, 2), [Position(1, 2)], [])
 g = Graph()
 # g.breadth_first_search(root)
-initialDepth = 0
 maxDepth = 3
-g.iddfs(root, initialDepth, maxDepth)
+g.iddfs(root, maxDepth)
 
 #g = Graph()
-#g.DFS(root)
+# g.DFS(root)
