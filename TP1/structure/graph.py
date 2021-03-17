@@ -78,7 +78,10 @@ class Graph:
                     if not self.check_if_wall(box) and not self.check_if_box(box):
                         if self.check_win(aux_node):
                             aux_node.steps.append(move)
-                            print(aux_node.steps)
+                            print("Los pasos para ganar fueron: " + str(aux_node.steps))
+                            print("La profundidad fue: " + str(aux_node.depth))
+                            print("En total se expandieron " + str(len(self.visited_nodes)) + " nodos")
+                            print("En total quedaron " + str(len(self.nodes_to_visit_queue)) + " nodos frontera")
                             return True
                         self.add_node(aux_node, move)
                     else:
@@ -87,10 +90,6 @@ class Graph:
             else:
                 self.add_node(aux_node, move)
         return False
-
-
-
-
 
     def expand(self, _node):
         newDepth = _node.depth + 1

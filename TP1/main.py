@@ -1,6 +1,5 @@
 from load_map import getInitialPositions
 import time
-
 from boards.board0 import board0
 from boards.board1 import board1
 from boards.board2 import board2
@@ -17,7 +16,7 @@ from structure.graph import Graph
 from Heuristics.Manhattan import manhattan
 
 #boards = [board0, board1, ..., board5]
-WALLS, GOALS, PLAYER, BOXES = getInitialPositions(board1) #Choose board
+WALLS, GOALS, PLAYER, BOXES = getInitialPositions(board2) #Choose board
 player_position = Position(PLAYER[0][1], PLAYER[0][0])
 walls_positions = [Position(coord[1], coord[0]) for coord in WALLS]
 boxes_positions = [Position(coord[1], coord[0]) for coord in BOXES]
