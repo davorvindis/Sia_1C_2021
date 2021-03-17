@@ -4,9 +4,7 @@ from collections import defaultdict
 from structure.node import Node
 from structure.position import Position
 
-
 DIRECTION = {
-
     'up': Position(0, -1),
     'down': Position(0, 1),
     'right': Position(1, 0),
@@ -15,7 +13,13 @@ DIRECTION = {
 
 class Graph:
     """ Has the static content of the game: {walls, goals} && Graph structure and game analytics"""
-    
+    DIRECTION = {
+        'up': Position(0, -1),
+        'down': Position(0, 1),
+        'right': Position(1, 0),
+        'left': Position(-1, 0)
+    }
+
     def __init__(self, walls, goals):
         self.walls = walls
         self.goals = goals
