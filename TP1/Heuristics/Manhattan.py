@@ -2,8 +2,6 @@ def manhattan(graph, node):
     """ Devuelve la minimia suma de
         distancia del jugador a la caja libre mas cercana + la distancia de esta caja al goal mas cercano """
 
-
-
     flag = True
     result = 0
     for box in node.boxes_positions:
@@ -19,5 +17,3 @@ def manhattan(graph, node):
                     if auxiliar < result:
                         result = auxiliar
     return result
-
-# def heuristica2(graph, node):

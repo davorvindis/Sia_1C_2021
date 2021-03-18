@@ -75,4 +75,4 @@ def a_star(graph, root):
                 else:  # si lo visité
                     if nodes[hash(child_node)] > total_cost:
                         nodes[hash(child_node)] = total_cost
-    print("nada")
+    print("Solucion no encontrada")
