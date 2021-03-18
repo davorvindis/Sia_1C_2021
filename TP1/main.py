@@ -32,7 +32,8 @@ g = Graph(walls_positions, goals_positions)
 
 maxDepth = 35
 start_time = time.time()
-a_star(g, root)
+# a_star(g, root, heuristic4)
+id_a_star(g, root, heuristic4, heuristic4(g,root))
 # iddfs(g, root, maxDepth)
 # dfs(g, root)
 # bfs(g, root)
