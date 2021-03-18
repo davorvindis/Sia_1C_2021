@@ -1,4 +1,3 @@
-from Heuristics.Manhattan import manhattan
 import copy
 
 def moves_available(self):
@@ -24,7 +23,7 @@ def add_to_astar_queue(nodes, queue, _node, cost):
         queue.append(_node)
 
 
-def a_star(graph, root):
+def a_star(graph, root, heuristic):
     graph.nodes_to_visit_queue.append(root)
     visited_nodes = set()
     nodes = {hash(root): 0}
@@ -50,7 +49,7 @@ def a_star(graph, root):
                         box.move_position(graph.DIRECTION[move])
                     if not graph.check_if_wall(box) and not graph.check_if_box(box):  # ACÁ EL MOVIMIENTO VALE
                         child_node.steps.append(move)  # Agrego el movimiento al nodo
-                        heuristic_cost = manhattan(graph, child_node)
+                        heuristic_cost = heuristic(graph, child_node)
                         child_node.add_h_cost(heuristic_cost)
                         total_cost = child_node.h_cost + child_node.depth
                         if child_node not in visited_nodes:  # Me fijo si no lo visite
@@ -65,7 +64,7 @@ def a_star(graph, root):
                 continue
             else:
                 child_node.steps.append(move)  # Agrego el movimiento al nodo
-                heuristic_cost = manhattan(graph, child_node)
+                heuristic_cost = heuristic(graph, child_node)
                 child_node.add_h_cost(heuristic_cost)
                 total_cost = child_node.h_cost + child_node.depth
                 if child_node not in visited_nodes:  # Me fijo si no lo visite

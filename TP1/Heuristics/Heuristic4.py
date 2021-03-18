@@ -1,4 +1,4 @@
-def manhattan(graph, node):
+def heuristic4(graph, node):
     """ Devuelve la minimia suma de
         distancia del jugador a la caja libre mas cercana + la distancia de esta caja al goal mas cercano """
 

@@ -15,7 +15,10 @@ from algorithms.greedy_local import greedy_local
 from structure.node import Node
 from structure.position import Position
 from structure.graph import Graph
-from Heuristics.Manhattan import manhattan
+from Heuristics.Heuristic1 import heuristic1
+from Heuristics.Heuristic2 import heuristic2
+from Heuristics.Heuristic3 import heuristic3
+from Heuristics.Heuristic4 import heuristic4
 
 #boards = [board0, board1, ..., board5]
 WALLS, GOALS, PLAYER, BOXES = getInitialPositions(board2) #Choose board
@@ -33,6 +36,6 @@ a_star(g, root)
 # iddfs(g, root, maxDepth)
 # dfs(g, root)
 # bfs(g, root)
-# greedy_local(g, root, manhattan)
-# greedy_global(g, root, manhattan)
+# greedy_local(g, root, heuristic4)
+# greedy_global(g, root, heuristic4)
 print("--- %s seconds ---" % (time.time() - start_time))
