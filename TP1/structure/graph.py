@@ -123,6 +123,19 @@ class Graph:
 
     def expand_possible_moves_using_priority_queue(self, node, heuristic):
         for move in DIRECTION:
+            if len(node.steps) != 0:
+                if move == 'down':
+                    if node.steps[len(node.steps)-1] == 'up':
+                        continue
+                if move == 'up':
+                    if node.steps[len(node.steps)-1] == 'down':
+                        continue
+                if move == 'left':
+                    if node.steps[len(node.steps)-1] == 'right':
+                        continue
+                if move == 'right':
+                    if node.steps[len(node.steps)-1] == 'left':
+                        continue
             aux_node = copy.deepcopy(node)
             aux_node.player_position.move_position(DIRECTION[move])
             if self.check_if_wall(aux_node.player_position):
