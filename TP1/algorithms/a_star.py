@@ -26,6 +26,8 @@ def add_to_astar_queue(nodes, queue, _node, cost):
 def a_star(graph, root, heuristic):
     graph.nodes_to_visit_queue.append(root)
     visited_nodes = set()
+    root.add_h_cost(heuristic(graph,root))
+    visited_nodes.add(root)
     nodes = {hash(root): 0}
 
     while graph.nodes_to_visit_queue:
