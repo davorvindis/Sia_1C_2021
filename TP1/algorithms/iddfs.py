@@ -5,7 +5,6 @@ def iddfs(self, _root, maxDepth):
 
     while len(self.nodes_to_visit_queue) != 0:
 
-        # print('> ', self.current_node.steps)
         self.current_node = self.nodes_to_visit_queue.pop()
 
         # Verify if the node is a win
@@ -22,6 +21,6 @@ def iddfs(self, _root, maxDepth):
 
             #Verify maxDepth & Expand
             if self.current_node.depth != maxDepth:
-                self.expand(self.current_node)
+                self.expand_with_depth(self.current_node)
 
     print("There was no solution with the given maxDepth")

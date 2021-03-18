@@ -1,4 +1,5 @@
 import copy
+import heapq
 from collections import deque
 from collections import defaultdict 
 from structure.node import Node
@@ -28,6 +29,10 @@ class Graph:
     nodes_to_visit_queue = deque()
     visited_nodes = set()
 
+    # Priority Queue
+    priority_queue = []
+    heapq.heapify(priority_queue) 
+
     def check_win(self, _node):
         aux = 0
         for b in _node.boxes_positions:
@@ -47,6 +52,11 @@ class Graph:
         aux_node.steps.append(move)
         if aux_node not in self.visited_nodes:
             self.nodes_to_visit_queue.append(aux_node)
+
+    def add_node_to_priority_queue(self, aux_node, move):
+        aux_node.steps.append(move)
+        if aux_node not in self.visited_nodes:
+            heapq.heappush(self.priority_queue, aux_node)
 
     def check_if_wall(self, position):
         if position in self.walls:
@@ -91,7 +101,7 @@ class Graph:
                 self.add_node(aux_node, move)
         return False
 
-    def expand(self, _node):
+    def expand_with_depth(self, _node):
         newDepth = _node.depth + 1
         for move in DIRECTION:
             aux_node = copy.deepcopy(_node)
@@ -111,3 +121,23 @@ class Graph:
                 self.add_node_with_depth(aux_node, move, newDepth)
         return False
 
+    def expand_possible_moves_using_priority_queue(self, node, heuristic):
+        for move in DIRECTION:
+            aux_node = copy.deepcopy(node)
+            aux_node.player_position.move_position(DIRECTION[move])
+            if self.check_if_wall(aux_node.player_position):
+                continue
+            if self.check_if_box(aux_node.player_position):
+                for box in aux_node.boxes_positions:
+                    if box == aux_node.player_position:
+                        box.move_position(DIRECTION[move])
+                    if not self.check_if_wall(box) and not self.check_if_box(box):
+                        aux_node.add_h_cost(heuristic(self, aux_node))
+                        self.add_node_to_priority_queue(aux_node, move)
+                    else:
+                        continue
+                continue
+            else:
+                aux_node.add_h_cost(heuristic(self, aux_node))
+                self.add_node_to_priority_queue(aux_node, move)
+        return False

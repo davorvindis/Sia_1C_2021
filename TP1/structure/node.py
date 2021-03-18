@@ -19,7 +19,6 @@ class Node:
         self.depth = 0
         self.h_cost = 0
 
-
     def add_step(self, move):
         self.steps.append(move)
 
@@ -41,3 +40,8 @@ class Node:
 
     def __hash__(self):
         return hash(self.player_position) + hash(str(self.boxes_positions.sort())) + hash(str(self.h_cost))
+
+    def __lt__(self, other):
+        if self.h_cost == other.h_cost:
+            return self.depth < other.depth
+        return self.h_cost < other.h_cost

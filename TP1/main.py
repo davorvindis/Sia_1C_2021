@@ -10,6 +10,8 @@ from algorithms.bfs import bfs
 from algorithms.dfs import dfs
 from algorithms.iddfs import iddfs
 from algorithms.a_star import a_star
+# from algorithms.greedy_global import greedy_global
+from algorithms.greedy_local import greedy_local
 from structure.node import Node
 from structure.position import Position
 from structure.graph import Graph
@@ -31,4 +33,6 @@ start_time = time.time()
 # iddfs(g, root, maxDepth)
 # dfs(g, root)
 # bfs(g, root)
+greedy_local(g, root, manhattan)
+# greedy_global(g, root, manhattan)
 print("--- %s seconds ---" % (time.time() - start_time))
