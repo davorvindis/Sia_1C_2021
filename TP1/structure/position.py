@@ -13,7 +13,7 @@ class Position:
         self.y += position.y
 
     def distance_to(self, other_position):
-        return math.sqrt(((self.x - other_position.x) ** 2) + ((self.y - other_position.y) ** 2))
+        return abs(self.x - other_position.x) + abs(self.y - other_position.y)
 
     def __str__(self):
         return "(" + str(self.x) + ", " + str(self.y) + ")"

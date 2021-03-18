@@ -31,8 +31,11 @@ def a_star(graph, root):
 
     while graph.nodes_to_visit_queue:
         graph.current_node = graph.nodes_to_visit_queue.popleft()
-        print(graph.current_node.steps)
         if graph.check_win(graph.current_node):
+            print("Los pasos para ganar fueron: " + str(graph.current_node.steps))
+            print("La profundidad fue: " + str(graph.current_node.depth))
+            print("En total se expandieron " + str(len(visited_nodes)) + " nodos")
+            print("En total quedaron " + str(len(graph.nodes_to_visit_queue)) + " nodos frontera")
             print("win")
             return
         for move in graph.DIRECTION:
