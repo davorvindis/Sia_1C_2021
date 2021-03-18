@@ -17,6 +17,8 @@ def greedy_local(self, root, heuristic):
         if flag:
             try:
                 elem = heapq.heappop(self.priority_queue)
+                while len(self.priority_queue) != 0:
+                    heapq.heappop(self.priority_queue)
             except IndexError:
                 return
 

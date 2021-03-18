@@ -18,4 +18,4 @@ def dfs(self, root):
             #Add it to the list of visited
             self.visited_nodes.add(self.current_node)
             #Expand actual node
-            self.expand(self.current_node)
+            self.expand_with_depth(self.current_node)
