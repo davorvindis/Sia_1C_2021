@@ -10,6 +10,7 @@ from algorithms.bfs import bfs
 from algorithms.dfs import dfs
 from algorithms.iddfs import iddfs
 from algorithms.a_star import a_star
+from algorithms.id_a_star import id_a_star
 from algorithms.greedy_global import greedy_global
 from algorithms.greedy_local import greedy_local
 from structure.node import Node
@@ -33,7 +34,7 @@ g = Graph(walls_positions, goals_positions)
 maxDepth = 35
 start_time = time.time()
 # a_star(g, root, heuristic4)
-id_a_star(g, root, heuristic4, heuristic4(g,root))
+id_a_star(g, root, heuristic1)
 # iddfs(g, root, maxDepth)
 # dfs(g, root)
 # bfs(g, root)
