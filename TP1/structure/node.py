@@ -27,6 +27,9 @@ class Node:
 
     def add_h_cost(self, cost):
         self.h_cost = cost
+        
+    def get_Fvalue(self):
+        return self.depth + self.h_cost
 
     def __eq__(self, other):
         return self.player_position == other.player_position and self.boxes_positions == other.boxes_positions
