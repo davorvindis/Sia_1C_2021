@@ -6,13 +6,13 @@ def id_a_star(graph, root, heuristic):
 
     visited_nodes = set()
     root.add_h_cost(heuristic(graph, root))
-    frontierHeap = [(root.get_Fvalue(), root)]
-    heapq.heapify(frontierHeap)
+    frontera = [(root.get_Fvalue(), root)]
+    heapq.heapify(frontera)
     nodosExpandidos = 0
 
-    while frontierHeap:
+    while frontera:
 
-        node = heapq.heappop(frontierHeap)
+        node = heapq.heappop(frontera)
         node = node[1]
 
         if node not in visited_nodes:
@@ -30,7 +30,7 @@ def id_a_star(graph, root, heuristic):
                 print("Los pasos para ganar fueron : {0}".format(str(graph.current_node.steps)))
                 print("La profundidad fue          : {0}".format(str(graph.current_node.depth)))
                 print("En total se expandieron     : {0} nodos ".format(nodosExpandidos))
-                print("En total quedaron           : {0} nodos frontera".format(len(frontierHeap)))
+                print("En total quedaron           : {0} nodos frontera".format(len(frontera)))
                 return
 
             else: #not victory
@@ -60,7 +60,7 @@ def id_a_star(graph, root, heuristic):
                                 if child_node not in visited_nodes:
                                     visited_nodes.add(child_node) # getLevel() ?
                                     if F_score > limit:
-                                        heapq.heappush(frontierHeap, (F_score, child_node))
+                                        heapq.heappush(frontera, (F_score, child_node))
                                     else: 
                                         graph.nodes_to_visit_queue.append(child_node)
                             else:
@@ -78,7 +78,7 @@ def id_a_star(graph, root, heuristic):
                         if child_node not in visited_nodes:
                             visited_nodes.add(child_node)
                             if F_score > limit:
-                                heapq.heappush(frontierHeap, (F_score, child_node))
+                                heapq.heappush(frontera, (F_score, child_node))
                             else: 
                                 graph.nodes_to_visit_queue.append(child_node)
 
