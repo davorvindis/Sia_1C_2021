@@ -87,6 +87,7 @@ class Graph:
     def check_moves(self, _node):
         for move in DIRECTION:
             aux_node = copy.deepcopy(_node)
+            aux_node.add_cost()
             aux_node.player_position.move_position(DIRECTION[move])
             if self.check_if_wall(aux_node.player_position):
                 continue
@@ -132,6 +133,7 @@ class Graph:
 
     def expand_possible_moves_using_priority_queue(self, node, heuristic):
         for move in DIRECTION:
+
             if len(node.steps) != 0:
                 if move == 'down':
                     if node.steps[len(node.steps) - 1] == 'up':
@@ -146,6 +148,7 @@ class Graph:
                     if node.steps[len(node.steps) - 1] == 'left':
                         continue
             aux_node = copy.deepcopy(node)
+            aux_node.add_cost()
             aux_node.player_position.move_position(DIRECTION[move])
             if self.check_if_wall(aux_node.player_position):
                 continue

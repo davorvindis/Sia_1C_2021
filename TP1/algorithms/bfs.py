@@ -11,5 +11,4 @@ def bfs(graph, root, board):
             return
         if not len(graph.nodes_to_visit_queue) == 0:
             graph.current_node = graph.nodes_to_visit_queue[0]
-            graph.current_node.add_cost()
     print("solution not found")

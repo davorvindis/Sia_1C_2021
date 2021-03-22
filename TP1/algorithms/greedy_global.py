@@ -25,7 +25,10 @@ def greedy_global(self, root, heuristic):
 
         # Verify if the node is a win
         if self.check_win(self.current_node):
-            print(self.current_node.steps)
+            print("Los pasos para ganar fueron: " + str(self.current_node.steps))
+            print("La profundidad fue: " + str(self.current_node.depth))
+            print("En total se expandieron " + str(len(self.visited_nodes)) + " nodos")
+            print("En total quedaron " + str(len(self.priority_queue)) + " nodos frontera")
             print("There you have the steps to win")
             return
 

@@ -22,7 +22,7 @@ from Heuristics.Heuristic3 import heuristic3
 from Heuristics.Heuristic4 import heuristic4
 
 #boards = [board0, board1, ..., board5]
-WALLS, GOALS, PLAYER, BOXES = getInitialPositions(board2) #Choose board
+WALLS, GOALS, PLAYER, BOXES = getInitialPositions(board5) #Choose board
 player_position = Position(PLAYER[0][1], PLAYER[0][0])
 walls_positions = [Position(coord[1], coord[0]) for coord in WALLS]
 boxes_positions = [Position(coord[1], coord[0]) for coord in BOXES]
@@ -31,13 +31,13 @@ goals_positions = [Position(coord[1], coord[0]) for coord in GOALS]
 root = Node(player_position, boxes_positions, [])
 g = Graph(walls_positions, goals_positions)
 
-maxDepth = 35
+maxDepth = 50
 start_time = time.time()
 # a_star(g, root, heuristic4)
-# id_a_star(g, root, heuristic1)
+# id_a_star(g, root, heuristic4)
 # iddfs(g, root, maxDepth)
 # dfs(g, root)
-bfs(g, root, board2)
+# bfs(g, root, board5)
 # greedy_local(g, root, heuristic4)
-# greedy_global(g, root, heuristic4)
+greedy_global(g, root, heuristic4)
 print("--- %s seconds ---" % (time.time() - start_time))
