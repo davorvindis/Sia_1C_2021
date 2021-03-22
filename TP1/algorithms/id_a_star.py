@@ -30,7 +30,7 @@ def id_a_star(graph, root, heuristic):
                 print("Los pasos para ganar fueron : {0}".format(str(graph.current_node.steps)))
                 print("La profundidad fue          : {0}".format(str(graph.current_node.depth)))
                 print("En total se expandieron     : {0} nodos ".format(nodosExpandidos))
-                print("En total quedaron           : {0} nodos frontera".format(len(graph.nodes_to_visit_queue)))
+                print("En total quedaron           : {0} nodos frontera".format(len(frontierHeap)))
                 return
 
             else: #not victory
