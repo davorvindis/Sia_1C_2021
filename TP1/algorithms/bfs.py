@@ -1,13 +1,15 @@
-def bfs(self, root):
-    self.nodes_to_visit_queue.append(root)
-    self.current_node = root
-    while len(self.nodes_to_visit_queue) != 0:
-        self.visited_nodes.add(self.current_node)
-        self.nodes_to_visit_queue.popleft()
-        if self.check_moves(self.current_node):
+
+def bfs(graph, root, board):
+    graph.nodes_to_visit_queue.append(root)
+    graph.current_node = root
+    while graph.nodes_to_visit_queue:
+        graph.print_move(board, graph.current_node)
+        graph.visited_nodes.add(graph.current_node)
+        graph.nodes_to_visit_queue.popleft()
+        if graph.check_moves(graph.current_node):
             print("Se encontró solucion")
             return
-        if not len(self.nodes_to_visit_queue) == 0:
-            self.current_node = self.nodes_to_visit_queue[0]
-            self.current_node.add_cost()
+        if not len(graph.nodes_to_visit_queue) == 0:
+            graph.current_node = graph.nodes_to_visit_queue[0]
+            graph.current_node.add_cost()
     print("solution not found")

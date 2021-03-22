@@ -1,7 +1,7 @@
 import copy
 import heapq
 from collections import deque
-from collections import defaultdict 
+from collections import defaultdict
 from structure.node import Node
 from structure.position import Position
 
@@ -11,6 +11,7 @@ DIRECTION = {
     'right': Position(1, 0),
     'left': Position(-1, 0)
 }
+
 
 class Graph:
     """ Has the static content of the game: {walls, goals} && Graph structure and game analytics"""
@@ -31,7 +32,7 @@ class Graph:
 
     # Priority Queue
     priority_queue = []
-    heapq.heapify(priority_queue) 
+    heapq.heapify(priority_queue)
 
     def check_win(self, _node):
         aux = 0
@@ -74,6 +75,14 @@ class Graph:
         _node.boxes_positions.sort()
         self.check_win(_node)
         return _node
+
+    def print_move(self, board, _node):
+        aux = copy.deepcopy(board)
+        for box in _node.boxes_positions:
+            aux[box.y][box.x] = '@'
+        aux[_node.player_position.y][_node.player_position.x] = 'x'
+        print(aux)
+        return
 
     def check_moves(self, _node):
         for move in DIRECTION:
@@ -125,16 +134,16 @@ class Graph:
         for move in DIRECTION:
             if len(node.steps) != 0:
                 if move == 'down':
-                    if node.steps[len(node.steps)-1] == 'up':
+                    if node.steps[len(node.steps) - 1] == 'up':
                         continue
                 if move == 'up':
-                    if node.steps[len(node.steps)-1] == 'down':
+                    if node.steps[len(node.steps) - 1] == 'down':
                         continue
                 if move == 'left':
-                    if node.steps[len(node.steps)-1] == 'right':
+                    if node.steps[len(node.steps) - 1] == 'right':
                         continue
                 if move == 'right':
-                    if node.steps[len(node.steps)-1] == 'left':
+                    if node.steps[len(node.steps) - 1] == 'left':
                         continue
             aux_node = copy.deepcopy(node)
             aux_node.player_position.move_position(DIRECTION[move])
